@@ -4,7 +4,7 @@ WORKDIR /app
 # https://tailscale.com/kb/1118/custom-derp-servers/
 RUN go install tailscale.com/cmd/derper@main
 
-FROM ubuntu
+FROM debian:bookworm-slim
 WORKDIR /app
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -21,7 +21,7 @@ ENV DERP_ADDR :443
 ENV DERP_STUN true
 ENV DERP_STUN_PORT 3478
 ENV DERP_HTTP_PORT 80
-ENV DERP_VERIFY_CLIENTS false
+ENV DERP_VERIFY_CLIENTS true
 ENV DERP_VERIFY_CLIENT_URL ""
 
 COPY --from=builder /go/bin/derper .
